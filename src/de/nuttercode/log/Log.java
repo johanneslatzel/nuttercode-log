@@ -74,7 +74,7 @@ public class Log implements Closeable {
 	private void setupLogFile() {
 		logFile = Paths.get(directory.getAbsolutePath(), logName + LOG_FILE_SUFFIX).toFile();
 		try {
-			writer = new BufferedWriter(new FileWriter(logFile));
+			writer = new BufferedWriter(new FileWriter(logFile, true));
 		} catch (IOException e) {
 			throw new LogException(e);
 		}
