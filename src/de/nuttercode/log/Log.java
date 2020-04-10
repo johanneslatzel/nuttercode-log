@@ -109,10 +109,11 @@ public class Log implements Closeable {
 	 * renames the current log file "[name].log" to "[name]_[timestamp in
 	 * milliseconds].log" and creates a new "[name].log" file
 	 * 
+	 * @return the renamed {@link File}
 	 * @throws SecurityException if {@link File#renameTo(File)} does
 	 * @throws LogException      if an {@link IOException} has been thrown
 	 */
-	public void snap() {
+	public File snap() {
 		synchronized (fileLock) {
 			try {
 				writer.flush();
@@ -123,7 +124,9 @@ public class Log implements Closeable {
 			String absp = logFile.getAbsolutePath();
 			logFile.renameTo(
 					new File(absp.substring(0, absp.length() - 4) + System.currentTimeMillis() + LOG_FILE_SUFFIX));
+			File newFile = logFile;
 			setupLogFile();
+			return newFile;
 		}
 
 	}
